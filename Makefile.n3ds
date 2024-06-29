@@ -5,6 +5,7 @@ endif
 include $(DEVKITARM)/base_tools
 
 TARGET_LIB = libSDL2.a
+OUT_DIR = lib
 
 OBJS =	src/SDL.o \
 	src/SDL_assert.o \
@@ -104,11 +105,14 @@ LDFLAGS		:=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 CFLAGS		+= -Wno-unused-variable
 
 LIBS	:= -lctru -lm
+AEMSTRO := aemstro
 
 all: $(OBJS) $(TARGET_LIB)
 
 $(TARGET_LIB): $(OBJS)
 	$(AR) -rc $@ $^
+	mkdir -p $(OUT_DIR)
+	mv $(TARGET_LIB) $(OUT_DIR)/$(TARGET_LIB)
 
 
 src/render/3ds/shader_vsh_shbin.h src/render/3ds/shader.vsh.o:

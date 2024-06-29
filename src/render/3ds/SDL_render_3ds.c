@@ -196,14 +196,14 @@ typedef struct {
 //stolen from staplebutt
 static void GPU_SetDummyTexEnv(u8 num)
 {
-	GPU_SetTexEnv(num,
-		GPU_TEVSOURCES(GPU_PREVIOUS, 0, 0),
-		GPU_TEVSOURCES(GPU_PREVIOUS, 0, 0),
-		GPU_TEVOPERANDS(0,0,0),
-		GPU_TEVOPERANDS(0,0,0),
-		GPU_REPLACE,
-		GPU_REPLACE,
-		0xFFFFFFFF);
+	// GPU_SetTexEnv(num,
+		// GPU_TEVSOURCES(GPU_PREVIOUS, 0, 0),
+		// GPU_TEVSOURCES(GPU_PREVIOUS, 0, 0),
+		// GPU_TEVOPERANDS(0,0,0),
+		// GPU_TEVOPERANDS(0,0,0),
+		// GPU_REPLACE,
+		// GPU_REPLACE,
+		// 0xFFFFFFFF);
 }
 
 void *N3DS_pool_malloc(N3DS_RenderData *data, u32 size)
@@ -439,9 +439,9 @@ N3DS_CreateRenderer(SDL_Window * window, Uint32 flags)
 	data->pool_size         = N3DS_TEMPPOOL_SIZE;
 
 	gfxInitDefault();
-	GPU_Init(NULL);
+	//GPU_Init(NULL);
 	gfxSet3D(false);
-	GPU_Reset(NULL, data->gpu_cmd, N3DS_GPU_FIFO_SIZE);
+	//GPU_Reset(NULL, data->gpu_cmd, N3DS_GPU_FIFO_SIZE);
 
 	//Setup the shader
 	data->dvlb = DVLB_ParseFile((u32 *)shader_vsh_shbin, shader_vsh_shbin_size);
@@ -457,36 +457,36 @@ N3DS_CreateRenderer(SDL_Window * window, Uint32 flags)
 	matrix_init_orthographic(data->ortho_matrix_bot, 0.0f, 320.0f, 0.0f, 240.0f, 0.0f, 1.0f);
 	matrix_gpu_set_uniform(data->ortho_matrix_top, data->projection_desc);
 
-	GPU_SetViewport((u32 *)osConvertVirtToPhys((u32)data->gpu_depth_fb_addr),
-		(u32 *)osConvertVirtToPhys((u32)data->gpu_fb_addr),
-		0, 0, 240, 400);
+	// GPU_SetViewport((u32 *)osConvertVirtToPhys((u32)data->gpu_depth_fb_addr),
+		// (u32 *)osConvertVirtToPhys((u32)data->gpu_fb_addr),
+		// 0, 0, 240, 400);
 
-	GPU_DepthMap(-1.0f, 0.0f);
-	GPU_SetFaceCulling(GPU_CULL_NONE);
-	GPU_SetStencilTest(false, GPU_ALWAYS, 0x00, 0xFF, 0x00);
-	GPU_SetStencilOp(GPU_STENCIL_KEEP, GPU_STENCIL_KEEP, GPU_STENCIL_KEEP);
-	GPU_SetBlendingColor(0,0,0,0);
-	GPU_SetDepthTestAndWriteMask(true, GPU_GEQUAL, GPU_WRITE_ALL);
-	GPUCMD_AddMaskedWrite(GPUREG_EARLYDEPTH_TEST1, 0x1, 0);
-	GPUCMD_AddWrite(GPUREG_EARLYDEPTH_TEST2, 0);
+	// GPU_DepthMap(-1.0f, 0.0f);
+	// GPU_SetFaceCulling(GPU_CULL_NONE);
+	// GPU_SetStencilTest(false, GPU_ALWAYS, 0x00, 0xFF, 0x00);
+	// GPU_SetStencilOp(GPU_STENCIL_KEEP, GPU_STENCIL_KEEP, GPU_STENCIL_KEEP);
+	// GPU_SetBlendingColor(0,0,0,0);
+	// GPU_SetDepthTestAndWriteMask(true, GPU_GEQUAL, GPU_WRITE_ALL);
+	// GPUCMD_AddMaskedWrite(GPUREG_EARLYDEPTH_TEST1, 0x1, 0);
+	// GPUCMD_AddWrite(GPUREG_EARLYDEPTH_TEST2, 0);
 
-	GPU_SetAlphaBlending(
-		GPU_BLEND_ADD,
-		GPU_BLEND_ADD,
-		GPU_SRC_ALPHA, GPU_ONE_MINUS_SRC_ALPHA,
-		GPU_ONE, GPU_ZERO
-	);
+	// GPU_SetAlphaBlending(
+		// GPU_BLEND_ADD,
+		// GPU_BLEND_ADD,
+		// GPU_SRC_ALPHA, GPU_ONE_MINUS_SRC_ALPHA,
+		// GPU_ONE, GPU_ZERO
+	// );
 
-	GPU_SetAlphaTest(false, GPU_ALWAYS, 0x00);
+	// GPU_SetAlphaTest(false, GPU_ALWAYS, 0x00);
 
-	GPU_SetDummyTexEnv(1);
-	GPU_SetDummyTexEnv(2);
-	GPU_SetDummyTexEnv(3);
-	GPU_SetDummyTexEnv(4);
-	GPU_SetDummyTexEnv(5);
+	// GPU_SetDummyTexEnv(1);
+	// GPU_SetDummyTexEnv(2);
+	// GPU_SetDummyTexEnv(3);
+	// GPU_SetDummyTexEnv(4);
+	// GPU_SetDummyTexEnv(5);
 
-	GPUCMD_Finalize();
-	GPUCMD_FlushAndRun();
+	// GPUCMD_Finalize();
+	// GPUCMD_FlushAndRun();
 	gspWaitForP3D();
 
 	N3DS_pool_reset(data);
@@ -560,26 +560,26 @@ TextureActivate(SDL_Texture * texture)
 	/* We must swizzle (Z-order) textures on the 3DS */
 	TextureSwizzle(n3ds_texture);
 
-	GPU_SetTextureEnable(GPU_TEXUNIT0);
+	//GPU_SetTextureEnable(GPU_TEXUNIT0);
 
-	GPU_SetTexEnv(
-		0,
-		GPU_TEVSOURCES(GPU_TEXTURE0, GPU_TEXTURE0, GPU_TEXTURE0),
-		GPU_TEVSOURCES(GPU_TEXTURE0, GPU_TEXTURE0, GPU_TEXTURE0),
-		GPU_TEVOPERANDS(0, 0, 0),
-		GPU_TEVOPERANDS(0, 0, 0),
-		GPU_REPLACE, GPU_REPLACE,
-		0xFFFFFFFF
-	);
+	// GPU_SetTexEnv(
+		// 0,
+		// GPU_TEVSOURCES(GPU_TEXTURE0, GPU_TEXTURE0, GPU_TEXTURE0),
+		// GPU_TEVSOURCES(GPU_TEXTURE0, GPU_TEXTURE0, GPU_TEXTURE0),
+		// GPU_TEVOPERANDS(0, 0, 0),
+		// GPU_TEVOPERANDS(0, 0, 0),
+		// GPU_REPLACE, GPU_REPLACE,
+		// 0xFFFFFFFF
+	// );
 
-	GPU_SetTexture(
-		GPU_TEXUNIT0,
-		(u32 *)osConvertVirtToPhys((u32)n3ds_texture->data),
-		n3ds_texture->textureWidth,
-		n3ds_texture->textureHeight,
-		GPU_TEXTURE_MAG_FILTER(GPU_NEAREST) | GPU_TEXTURE_MIN_FILTER(GPU_NEAREST),
-		n3ds_texture->format
-	);
+	// GPU_SetTexture(
+		// GPU_TEXUNIT0,
+		// (u32 *)osConvertVirtToPhys((u32)n3ds_texture->data),
+		// n3ds_texture->textureWidth,
+		// n3ds_texture->textureHeight,
+		// GPU_TEXTURE_MAG_FILTER(GPU_NEAREST) | GPU_TEXTURE_MIN_FILTER(GPU_NEAREST),
+		// n3ds_texture->format
+	// );
 
 	//sceGuEnable(GU_TEXTURE_2D);
 	//sceGuTexWrap(GU_REPEAT, GU_REPEAT);
@@ -781,29 +781,29 @@ N3DS_RenderFillRects(SDL_Renderer * renderer, const SDL_FRect * rects,
 		vertices[2].color = vertices[0].color;
 		vertices[3].color = vertices[0].color;
 
-		GPU_SetTexEnv(
-			0,
-			GPU_TEVSOURCES(GPU_PRIMARY_COLOR, GPU_PRIMARY_COLOR, GPU_PRIMARY_COLOR),
-			GPU_TEVSOURCES(GPU_PRIMARY_COLOR, GPU_PRIMARY_COLOR, GPU_PRIMARY_COLOR),
-			GPU_TEVOPERANDS(0, 0, 0),
-			GPU_TEVOPERANDS(0, 0, 0),
-			GPU_REPLACE, GPU_REPLACE,
-			0xFFFFFFFF
-		);
+		// GPU_SetTexEnv(
+			// 0,
+			// GPU_TEVSOURCES(GPU_PRIMARY_COLOR, GPU_PRIMARY_COLOR, GPU_PRIMARY_COLOR),
+			// GPU_TEVSOURCES(GPU_PRIMARY_COLOR, GPU_PRIMARY_COLOR, GPU_PRIMARY_COLOR),
+			// GPU_TEVOPERANDS(0, 0, 0),
+			// GPU_TEVOPERANDS(0, 0, 0),
+			// GPU_REPLACE, GPU_REPLACE,
+			// 0xFFFFFFFF
+		// );
 
-		GPU_SetAttributeBuffers(
-			2, // number of attributes
-			(u32*)osConvertVirtToPhys((u32)vertices),
-			GPU_ATTRIBFMT(0, 3, GPU_FLOAT) | GPU_ATTRIBFMT(1, 4, GPU_FLOAT),
-			0xFFFC, //0b1100
-			0x10,
-			1, //number of buffers
-			(u32[]){0x0}, // buffer offsets (placeholders)
-			(u64[]){0x10}, // attribute permutations for each buffer
-			(u8[]){2} // number of attributes for each buffer
-		);
+		// GPU_SetAttributeBuffers(
+			// 2, // number of attributes
+			// (u32*)osConvertVirtToPhys((u32)vertices),
+			// GPU_ATTRIBFMT(0, 3, GPU_FLOAT) | GPU_ATTRIBFMT(1, 4, GPU_FLOAT),
+			// 0xFFFC, //0b1100
+			// 0x10,
+			// 1, //number of buffers
+			// (u32[]){0x0}, // buffer offsets (placeholders)
+			// (u64[]){0x10}, // attribute permutations for each buffer
+			// (u8[]){2} // number of attributes for each buffer
+		// );
 
-		GPU_DrawArray(GPU_TRIANGLE_STRIP, 0, 4);
+		// GPU_DrawArray(GPU_TRIANGLE_STRIP, 0, 4);
 	}
 
     return 0;
@@ -899,19 +899,19 @@ N3DS_RenderCopy(SDL_Renderer * renderer, SDL_Texture * texture,
 	vertices[2].texcoord = (vector_2f){u0, v1};
 	vertices[3].texcoord = (vector_2f){u1, v1};
 
-	GPU_SetAttributeBuffers(
-		2, // number of attributes
-		(u32*)osConvertVirtToPhys((u32)vertices),
-		GPU_ATTRIBFMT(0, 3, GPU_FLOAT) | GPU_ATTRIBFMT(1, 4, GPU_FLOAT),
-		0xFFFC, //0b1100
-		0x10,
-		1, //number of buffers
-		(u32[]){0x0}, // buffer offsets (placeholders)
-		(u64[]){0x10}, // attribute permutations for each buffer
-		(u8[]){2} // number of attributes for each buffer
-	);
+	// GPU_SetAttributeBuffers(
+		// 2, // number of attributes
+		// (u32*)osConvertVirtToPhys((u32)vertices),
+		// GPU_ATTRIBFMT(0, 3, GPU_FLOAT) | GPU_ATTRIBFMT(1, 4, GPU_FLOAT),
+		// 0xFFFC, //0b1100
+		// 0x10,
+		// 1, //number of buffers
+		// (u32[]){0x0}, // buffer offsets (placeholders)
+		// (u64[]){0x10}, // attribute permutations for each buffer
+		// (u8[]){2} // number of attributes for each buffer
+	// );
 
-	GPU_DrawArray(GPU_TRIANGLE_STRIP, 0, 4);
+	// GPU_DrawArray(GPU_TRIANGLE_STRIP, 0, 4);
 
 	//if(alpha != 255) 3DS STUB
 	//sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGBA);
@@ -1022,19 +1022,19 @@ N3DS_RenderCopyEx(SDL_Renderer * renderer, SDL_Texture * texture,
 		Swap(&vertices[1].texcoord.u, &vertices[3].texcoord.u);
 	}
 
-	GPU_SetAttributeBuffers(
-		2, // number of attributes
-		(u32*)osConvertVirtToPhys((u32)vertices),
-		GPU_ATTRIBFMT(0, 3, GPU_FLOAT) | GPU_ATTRIBFMT(1, 4, GPU_FLOAT),
-		0xFFFC, //0b1100
-		0x10,
-		1, //number of buffers
-		(u32[]){0x0}, // buffer offsets (placeholders)
-		(u64[]){0x10}, // attribute permutations for each buffer
-		(u8[]){2} // number of attributes for each buffer
-	);
+	// GPU_SetAttributeBuffers(
+		// 2, // number of attributes
+		// (u32*)osConvertVirtToPhys((u32)vertices),
+		// GPU_ATTRIBFMT(0, 3, GPU_FLOAT) | GPU_ATTRIBFMT(1, 4, GPU_FLOAT),
+		// 0xFFFC, //0b1100
+		// 0x10,
+		// 1, //number of buffers
+		// (u32[]){0x0}, // buffer offsets (placeholders)
+		// (u64[]){0x10}, // attribute permutations for each buffer
+		// (u8[]){2} // number of attributes for each buffer
+	// );
 
-	GPU_DrawArray(GPU_TRIANGLE_STRIP, 0, 4);
+	// GPU_DrawArray(GPU_TRIANGLE_STRIP, 0, 4);
 
 	//if(alpha != 255)  3DS STUB
 		//sceGuTexFunc(GU_TFX_REPLACE, GU_TCC_RGBA);
@@ -1050,9 +1050,9 @@ N3DS_RenderPresent(SDL_Renderer * renderer)
 
 	data->displayListAvail = SDL_FALSE;
 
-	GPU_FinishDrawing();
-	GPUCMD_Finalize();
-	GPUCMD_FlushAndRun();
+	// GPU_FinishDrawing();
+	// GPUCMD_Finalize();
+	// GPUCMD_FlushAndRun();
 	gspWaitForP3D();
 
 	//Copy the GPU rendered FB to the screen FB
@@ -1145,7 +1145,7 @@ void matrix_gpu_set_uniform(const float *m, u32 startreg)
 		}
 	}
 
-	GPU_SetFloatUniform(GPU_VERTEX_SHADER, startreg, (u32 *)mu, 4);
+	//GPU_SetFloatUniform(GPU_VERTEX_SHADER, startreg, (u32 *)mu, 4);
 }
 
 void matrix_copy(float *dst, const float *src)
