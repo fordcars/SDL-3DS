@@ -1,0 +1,3 @@
+[submodule "extern/aemstro"]
+	path = extern/aemstro
+	url = https://github.com/smealum/aemstro

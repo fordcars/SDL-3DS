@@ -1,3 +1,7 @@
+Building:
+git submodule update --init --recursive
+make
+
 
                          Simple DirectMedia Layer
 
