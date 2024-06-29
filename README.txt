@@ -1,3 +1,5 @@
+Please note: I don't think this repo is functional ahaha
+
 Building:
 git submodule update --init --recursive
 make
